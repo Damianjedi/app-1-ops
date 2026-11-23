@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -5,22 +6,36 @@ pipeline {
         booleanParam(
             name: 'DEPLOY',
             defaultValue: false,
-            description: 'Czy wykonać etap wdrożenia?'
+            description: 'Czy wykonać wdrożenie aplikacji?'
         )
     }
 
     stages {
+
+        stage('Git Checkout') {
+            steps {
+                echo 'Pobieranie kodu źródłowego z repozytorium Git...'
+
+                git branch: 'main',
+                    url: 'https://github.com/PeterPorzuczek/TimeRiddle.git'
+
+                echo 'Kod źródłowy został pobrany.'
+            }
+        }
+
         stage('Build') {
             steps {
                 echo 'Rozpoczynam budowanie aplikacji...'
-                // Kroki budowania
+
+                // Tutaj dodaj polecenia budowania aplikacji
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Uruchamiam testy...'
-                // Kroki testowania
+                echo 'Uruchamiam testy aplikacji...'
+
+                // Tutaj dodaj polecenia testowania aplikacji
             }
         }
 
@@ -30,9 +45,11 @@ pipeline {
                     return params.DEPLOY == true
                 }
             }
+
             steps {
                 echo 'Rozpoczynam wdrażanie aplikacji...'
-                // Kroki wdrożenia
+
+                // Tutaj dodaj polecenia wdrażania aplikacji
             }
         }
     }
@@ -41,8 +58,13 @@ pipeline {
         success {
             echo 'Pipeline zakończony pomyślnie!'
         }
+
         failure {
             echo 'Wystąpił błąd podczas wykonywania pipeline!'
+        }
+
+        always {
+            echo 'Zakończono wykonywanie Pipeline.'
         }
     }
 }
