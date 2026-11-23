@@ -27,7 +27,6 @@ pipeline {
             steps {
                 echo 'Rozpoczynam budowanie aplikacji...'
 
-                // Tutaj dodaj polecenia budowania aplikacji
             }
         }
 
@@ -35,7 +34,6 @@ pipeline {
             steps {
                 echo 'Uruchamiam testy aplikacji...'
 
-                // Tutaj dodaj polecenia testowania aplikacji
             }
         }
 
@@ -49,7 +47,6 @@ pipeline {
             steps {
                 echo 'Rozpoczynam wdrażanie aplikacji...'
 
-                // Tutaj dodaj polecenia wdrażania aplikacji
             }
         }
     }
