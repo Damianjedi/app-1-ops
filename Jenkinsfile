@@ -1,14 +1,48 @@
 pipeline {
     agent any
+
     parameters {
-        string(name: 'GREETING', defaultValue: 'Hello', description: 'The greeting message')
-        choice(name: 'BRANCH', choices: ['master', 'dev'], description: 'Branch to build')
+        booleanParam(
+            name: 'DEPLOY',
+            defaultValue: false,
+            description: 'Czy wykonać etap wdrożenia?'
+        )
     }
+
     stages {
-        stage('Example') {
+        stage('Build') {
             steps {
-                echo "${params.GREETING}, we are building the ${params.BRANCH} branch."
+                echo 'Rozpoczynam budowanie aplikacji...'
+                // Kroki budowania
             }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Uruchamiam testy...'
+                // Kroki testowania
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                expression {
+                    return params.DEPLOY == true
+                }
+            }
+            steps {
+                echo 'Rozpoczynam wdrażanie aplikacji...'
+                // Kroki wdrożenia
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline zakończony pomyślnie!'
+        }
+        failure {
+            echo 'Wystąpił błąd podczas wykonywania pipeline!'
         }
     }
 }
